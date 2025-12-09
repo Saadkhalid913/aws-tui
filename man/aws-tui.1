@@ -1,0 +1,65 @@
+.TH AWS-TUI 1 "" "aws-tui" "User Commands"
+.SH NAME
+aws-tui \- Ink TUI for AWS EC2 and S3 (browse + start/stop)
+.SH SYNOPSIS
+.B aws-tui
+.RI [ options ]
+.P
+No flags are required; the tool reads AWS CLI credentials and config.
+.SH DESCRIPTION
+.B aws-tui
+is a terminal UI for browsing AWS resources. EC2 supports start/stop
+actions; S3 remains read-only (browse and download). The tool uses the
+same credentials and profiles configured for the AWS CLI.
+.P
+Navigation is hierarchical: home dashboard, pick a service (EC2 or S3),
+then drill down into lists and details. Regions can be changed quickly
+from the home screen via the region selector shortcut.
+.SH CREDENTIALS
+The tool relies on your existing AWS CLI configuration. Profiles,
+SSO, and MFA flows are handled by the AWS SDK using the default
+credential provider chain. You can override profile/region in the
+config file:
+.P
+.RS
+~/.config/aws-tui/config.json
+.RE
+.SH KEYBINDINGS
+.RS
+.TP
+.B q
+Quit the application.
+.TP
+.B h
+Return to the home dashboard.
+.TP
+.B R
+Open region selector modal.
+.TP
+.B r
+Refresh the current view.
+.TP
+.B / , arrow keys, PgUp/PgDn
+Navigate lists; PgUp/PgDn paginates where supported.
+.TP
+.B EC2 view
+arrows/jk move, PgDn/PgUp paginate, enter opens detail, s starts a stopped instance, x stops a running instance, r refreshes, Esc/\\(lh back.
+.TP
+.B S3 view
+Bucket list: arrows select, enter/\\(-> opens bucket, Esc back. Inside bucket: arrows move, enter/\\(-> on folder drills in, enter on file opens detail, \\(lh/backspace goes up, PgDn/PgUp paginate, r refresh.
+.RE
+.SH FILES
+.TP
+.I ~/.config/aws-tui/config.json
+Local configuration storing last-used profile, region, and pagination
+settings.
+.SH EXAMPLES
+Start the TUI using your current AWS profile and region:
+.P
+.RS
+.nf
+aws-tui
+.fi
+.RE
+.SH SEE ALSO
+aws(1), aws-configure(1)

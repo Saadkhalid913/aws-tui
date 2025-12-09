@@ -1,0 +1,54 @@
+{
+  "name": "aws-tui",
+  "version": "0.1.0",
+  "description": "AWS TUI (Ink) for EC2 and S3 with read-only guardrails.",
+  "type": "module",
+  "bin": {
+    "aws-tui": "./dist/index.js"
+  },
+  "directories": {
+    "man": "./man"
+  },
+  "scripts": {
+    "dev": "tsx src/index.tsx",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "install:man": "sh -c 'MAN_PREFIX=${MAN_PREFIX:-/usr/local}; TARGET=\"$MAN_PREFIX/share/man/man1\"; if mkdir -p \"$TARGET\" 2>/dev/null && install -m 0644 man/aws-tui.1 \"$TARGET/\"; then echo \"man page -> $TARGET/aws-tui.1\"; else FALLBACK=\"$HOME/.local/share/man/man1\"; if mkdir -p \"$FALLBACK\" && install -m 0644 man/aws-tui.1 \"$FALLBACK/\"; then echo \"man page -> $FALLBACK/aws-tui.1 (fallback)\"; else echo \"man page install failed; try: sudo MAN_PREFIX=$MAN_PREFIX npm run install:man\" >&2; exit 1; fi; fi'",
+    "install:global": "npm run build && npm install -g . && npm run install:man",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "man"
+  ],
+  "keywords": [
+    "aws",
+    "tui",
+    "ink",
+    "s3",
+    "ec2"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-ec2": "^3.645.0",
+    "@aws-sdk/client-s3": "^3.645.0",
+    "@aws-sdk/credential-providers": "^3.645.0",
+    "@aws-sdk/node-http-handler": "^3.370.0",
+    "ink": "^4.4.1",
+    "ink-select-input": "^5.0.0",
+    "ink-text-input": "^5.0.1",
+    "react": "^18.2.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "@types/react": "^18.3.11",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4",
+    "vitest": "^4.0.15"
+  }
+}
