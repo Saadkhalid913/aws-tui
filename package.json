@@ -33,6 +33,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@aws-sdk/client-cost-explorer": "^3.645.0",
     "@aws-sdk/client-ec2": "^3.645.0",
     "@aws-sdk/client-s3": "^3.645.0",
     "@aws-sdk/credential-providers": "^3.645.0",

@@ -6,7 +6,7 @@ import {Banner, ErrorBox, InfoBox, StatusLine} from './components/common.js';
 export type HomeProps = {
   profile?: string;
   region?: string;
-  onSelectService: (service: 'ec2' | 's3') => void;
+  onSelectService: (service: 'ec2' | 's3' | 'costs') => void;
   onOpenRegionModal: () => void;
   errorMessage?: string;
 };
@@ -14,6 +14,7 @@ export type HomeProps = {
 const serviceItems = [
   {label: 'EC2 (read-only)', value: 'ec2'},
   {label: 'S3 (read-only)', value: 's3'},
+  {label: 'Costs (read-only)', value: 'costs'},
 ];
 
 export function HomeView({
@@ -33,7 +34,7 @@ export function HomeView({
   return (
     <Box flexDirection="column">
       <Banner
-        title="AWS TUI (EC2 + S3)"
+        title="AWS TUI (EC2 + S3 + Costs)"
         subtitle="Read-only. Uses your AWS CLI profile/config."
       />
 
@@ -46,7 +47,7 @@ export function HomeView({
       <Box marginY={1}>
         <Text>Select a service:</Text>
       </Box>
-      <SelectInput items={serviceItems} onSelect={(item) => onSelectService(item.value as 'ec2' | 's3')} />
+      <SelectInput items={serviceItems} onSelect={(item) => onSelectService(item.value as 'ec2' | 's3' | 'costs')} />
 
       <Box marginTop={1}>
         <InfoBox message="Press R anytime to change region. Press q to quit." />

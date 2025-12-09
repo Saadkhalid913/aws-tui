@@ -1,6 +1,7 @@
 import {fromNodeProviderChain} from '@aws-sdk/credential-providers';
 import {EC2Client} from '@aws-sdk/client-ec2';
 import {S3Client} from '@aws-sdk/client-s3';
+import {CostExplorerClient} from '@aws-sdk/client-cost-explorer';
 import {NodeHttpHandler} from '@aws-sdk/node-http-handler';
 
 const clientCache = new Map<
@@ -8,6 +9,7 @@ const clientCache = new Map<
   {
     ec2: EC2Client;
     s3: S3Client;
+    ce: CostExplorerClient;
   }
 >();
 
@@ -21,6 +23,8 @@ function createHttpHandler() {
     socketTimeout: 10_000,
   });
 }
+
+const COST_EXPLORER_REGION = 'us-east-1';
 
 export function getClients(profile?: string, region?: string) {
   const cacheKey = key(profile, region);
@@ -36,7 +40,8 @@ export function getClients(profile?: string, region?: string) {
 
   const ec2 = new EC2Client(base);
   const s3 = new S3Client(base);
-  const entry = {ec2, s3};
+  const ce = new CostExplorerClient({...base, region: region ?? COST_EXPLORER_REGION});
+  const entry = {ec2, s3, ce};
   clientCache.set(cacheKey, entry);
   return entry;
 }

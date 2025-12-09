@@ -1,7 +1,7 @@
 import React, {createContext, useContext, useReducer} from 'react';
 import {AppConfig} from '../config.js';
 
-export type ServiceView = 'home' | 'ec2' | 's3';
+export type ServiceView = 'home' | 'ec2' | 's3' | 'costs';
 
 export type AppState = AppConfig & {
   configPath: string;

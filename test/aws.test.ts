@@ -46,6 +46,7 @@ beforeEach(() => {
   mockedGetClients.mockReturnValue({
     ec2: {send: ec2Send},
     s3: {send: s3Send},
+    ce: {send: vi.fn()},
   } as never);
 });
 

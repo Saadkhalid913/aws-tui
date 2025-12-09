@@ -5,6 +5,7 @@ import {AppProvider, useAppState} from './state/store.js';
 import {HomeView, RegionModal} from './ui/home.js';
 import {EC2View, EC2DetailPage} from './ui/ec2-view.js';
 import {S3View} from './ui/s3-view.js';
+import {CostsView} from './ui/costs-view.js';
 import {listRegions, InstanceSummary} from './aws/ec2.js';
 import {ObjectSummary} from './aws/s3.js';
 
@@ -62,6 +63,7 @@ type Page =
   | {type: 'home'}
   | {type: 'ec2'}
   | {type: 's3'}
+  | {type: 'costs'}
   | {type: 'ec2-detail'; instance: InstanceSummary; statusChecks?: string};
 
 function AppShell() {
@@ -185,6 +187,14 @@ function AppShell() {
             pageSize={state.pageSize}
             onBack={goBack}
             setNavLock={setNavLocked}
+          />
+        );
+      case 'costs':
+        return (
+          <CostsView
+            profile={state.profile}
+            region={state.region}
+            onBack={goBack}
           />
         );
       case 'ec2-detail':
